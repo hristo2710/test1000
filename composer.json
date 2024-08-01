@@ -1,0 +1,38 @@
+{
+  "name": "incloud/wordpress",
+  "description": "InCloud WordPress site.",
+  "type": "project",
+  "require": {
+    "php": "^8.3",
+    "johnpbloch/wordpress-core-installer": "^2.0",
+    "johnpbloch/wordpress-core": "^6.6",
+    "doctrine/dbal": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Incloud\\Wordpress\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "How Bizarre",
+      "email": "howbizarre@gmail.com"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "johnpbloch/wordpress-core-installer": true
+    },
+    "process-timeout": 0
+  },
+  "scripts": {
+    "add-database": "php create_database.php",
+    "dev": "php -S localhost:4004 -t wordpress"
+  },
+  "note": {
+    "to-start": "composer update",
+    "to-install-only-dependencies": "composer install --no-scripts",
+    "to-add-database": "composer run-script add-database -- writeNewDatabaseName",
+    "get-ready": "composer run-script dev"
+  }
+}
