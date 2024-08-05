@@ -4,9 +4,15 @@
   "type": "project",
   "require": {
     "php": "^8.3",
-    "johnpbloch/wordpress-core-installer": "^2.0",
-    "johnpbloch/wordpress-core": "^6.6",
-    "doctrine/dbal": "^4.0"
+    "composer/installers": "^2.2",
+    "roots/wordpress": "^6.1",
+    "roots/wp-config": "^1.0",
+    "roots/wp-password-bcrypt": "^1.1.0",
+    "doctrine/dbal": "^4.0",
+    "wpackagist-plugin/woocommerce": "*",
+    "fancyguy/webroot-installer": "^1.0",
+    "plugin/fake-sync-store" : "1.2.3",
+    "wpackagist-theme/twentytwentyfour": "*"
   },
   "autoload": {
     "psr-4": {
@@ -21,13 +27,61 @@
   ],
   "config": {
     "allow-plugins": {
-      "johnpbloch/wordpress-core-installer": true
+      "roots/wordpress-core-installer": true,
+      "composer/installers": true,
+      "fancyguy/webroot-installer": true
     },
     "process-timeout": 0
   },
+
+
+  "repositories": [
+    {
+        "type": "package",
+        "package": {
+            "name": "plugin/fake-sync-store",
+            "type": "wordpress-plugin",
+            "version": "1.2.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/HA-HUB-I/fake-store-sync/archive/refs/tags/1.2.3.zip"
+            },
+            "require": {
+                "fancyguy/webroot-installer": "^1.0"
+            }
+        }
+    },
+    {
+      "type": "composer",
+      "url": "https://wp-languages.github.io"
+  },
+  {
+    "type": "composer",
+    "url": "https://wpackagist.org"
+}
+],
+
+
+  "extra": {
+        "installer-paths": {
+            "wp/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+            "wp/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "wp/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+        },
+        "dropin-paths": {
+            "wp/wp-content/languages/": ["vendor:koodimonni-language"],
+            "wp/wp-content/languages/plugins/": ["vendor:koodimonni-plugin-language"],
+            "wp/wp-content/languages/themes/": ["vendor:koodimonni-theme-language"]
+        },
+        "wordpress-install-dir": "wp",
+        "webroot-dir": "content",
+        "webroot-package": "plugin/fake-sync-store"
+      },
+    
+
   "scripts": {
     "add-database": "php create_database.php",
-    "dev": "php -S localhost:4004 -t wordpress"
+    "dev": "php -S localhost:4004 -t wp"
   },
   "note": {
     "git-remove-origin": "git remote remove origin",
