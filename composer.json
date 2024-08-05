@@ -84,9 +84,13 @@
     "dev": "php -S localhost:4004 -t wp"
   },
   "note": {
+    "git-remove-origin": "git remote remove origin",
+    "rename-folder": "rename folder with the name of the project",
+    "git-init": "git init",
     "to-start": "composer update",
-    "to-install-only-dependencies": "composer install --no-scripts",
     "to-add-database": "composer run-script add-database -- writeNewDatabaseName",
-    "get-ready": "composer run-script dev"
+    "get-ready": "composer run-script dev",
+    
+    "to-install-only-dependencies": "composer install --no-scripts"
   }
 }
