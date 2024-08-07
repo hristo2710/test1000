@@ -4,6 +4,7 @@
     "port": 4001,
     "admin": {
       "name": "root",
+      
       "password": ".root."
     },
     "user": {
