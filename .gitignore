@@ -1,46 +1,6 @@
-# composer
-vendor
+composer.phar
+/vendor/
 
-# wordpress folder ignore
-wordpress/wp-admin
-wordpress/wp-content/uploads
-wordpress/wp-content/index.php
-wordpress/wp-includes
-# default plugin ignore
-wordpress/wp-content/plugins/akismet
-wordpress/wp-content/plugins/hello.php
-# Wordpress Default theme ignore
-wordpress/wp-content/themes/twentytwentyfour
-wordpress/wp-content/themes/twentytwentythree
-wordpress/wp-content/themes/twentytwentytwo
-# Wordpress Files ignore
-index.php
-license.txt
-readme.html
-wp-activate.php
-wp-blog-header.php
-wp-comments-post.php
-wp-config-sample.php
-wp-cron.php
-wp-links-opml.php
-wp-load.php
-wp-login.php
-wp-mail.php
-wp-settings.php
-wp-signup.php
-wp-trackback.php
-xmlrpc.php
-
-# init-composer
-config.json
-composer.json
-composer.lock
-
-
-
-
-
-
-
-
-
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock

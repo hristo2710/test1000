@@ -2,79 +2,91 @@
 
 require 'vendor/autoload.php';
 
-// Load configuration file
-echo "Loading configuration file...\n";
-$configFile = file_get_contents('./config.json');
-if ($configFile === false) {
-    echo "Error: Could not read configuration file.\n";
-    exit(1); // Exit with error
-}
-$config = json_decode($configFile, true);
-if ($config === null) {
-    echo "Error: Configuration file is not a valid JSON.\n";
-    exit(1); // Exit with error
-}
-echo "Configuration file loaded successfully.\n";
+use Dotenv\Dotenv;
 
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+#delay between command
+
+$second = "3";
+// ANSI color codes
+$redColor = "\033[31m";
+$greenColor = "\033[32m";
+$resetColor = "\033[0m";
+
+
+echo $greenColor . "Configuration file loaded successfully." . $resetColor . "\n";
+Sleep($second);
 // Extract configuration details
 echo "Extracting database configuration details...\n";
-$host = $config["db"]["host"];
-$user = $config["db"]["admin"]["name"];
-$password = $config["db"]["admin"]["password"];
-echo "Database configuration details extracted successfully.\n";
 
-// Check command-line arguments
-echo "Checking command-line arguments...\n";
-if ($argc < 2) {
-    echo "Usage: php create_database.php <database_name>\n";
+$host = $_ENV['DB_HOST'] ?? null;
+$user = $_ENV['ROOT_NAME'] ?? null;
+$password = $_ENV['ROOT_PASS'] ?? null;
+
+// Check if $host, $user, and $password are set
+if (!$host || !$user || !$password) {
+    echo $redColor . "Error: Database host, user, or password is not set." . $resetColor . "\n";
     exit(1); // Exit with error
 }
 
-$newDatabase = $argv[1];
-$newUser = $config["db"]["user"]["name"];
-$newUserPassword = $config["db"]["user"]["password"];
+echo $greenColor . "Database configuration details extracted successfully." . $resetColor . "\n";
+Sleep($second);
+// // Check command-line arguments
+// echo "Checking command-line arguments...\n";
+// if ($argc < 2) {
+//     echo "Usage: php create_database.php <database_name>\n";
+//     exit(1); // Exit with error
+// }
 
-echo "Database name: $newDatabase\n";
+$newDatabase = $_ENV['DB_NAME'];
+$newUser = $_ENV['DB_USER'];
+$newUserPassword = $_ENV['DB_PASSWORD'];
+
+echo $greenColor . "Database name: $newDatabase" . $resetColor . "\n";
+Sleep($second);
 
 // Create connection
 echo "Connecting to MySQL server...\n";
 $conn = new mysqli($host, $user, $password);
 if ($conn->connect_error) {
-    echo "Connection failed: " . $conn->connect_error . "\n";
+    echo $redColor . "Connection failed: " . $conn->connect_error . $resetColor . "\n";
     exit(1); // Exit with error
 }
-echo "Connected to MySQL server successfully\n";
+
+Sleep($second);
+echo $greenColor . "Connected to MySQL server successfully" . $resetColor . "\n";
 
 // Create database
 echo "Creating database '$newDatabase' if it does not exist...\n";
 $sqlCreateDB = "CREATE DATABASE IF NOT EXISTS `$newDatabase`";
 if ($conn->query($sqlCreateDB) === TRUE) {
-    echo "Database created successfully\n";
+    echo $greenColor . "Database created successfully" . $resetColor . "\n";
 } else {
-    echo "Error creating database: " . $conn->error . "\n";
+    echo $redColor . "Error creating database: " . $conn->error . $resetColor . "\n";
     $conn->close();
     exit(1); // Exit with error
 }
-
+Sleep($second);
 // Grant privileges
 echo "Granting all privileges on '$newDatabase' to user '$newUser'...\n";
 $sqlGrantPrivileges = "GRANT ALL PRIVILEGES ON `$newDatabase`.* TO '$newUser'@'%' IDENTIFIED BY '$newUserPassword'";
 if ($conn->query($sqlGrantPrivileges) === TRUE) {
-    echo "User '$newUser' granted privileges on '$newDatabase'\n";
+    echo $greenColor . "User '$newUser' granted privileges on '$newDatabase'" . $resetColor . "\n";
 } else {
-    echo "Error granting privileges: " . $conn->error . "\n";
+    echo $redColor . "Error granting privileges: " . $conn->error . $resetColor . "\n";
 }
 
 // Flush privileges to ensure they are loaded
 echo "Flushing privileges to ensure they are loaded...\n";
 if ($conn->query("FLUSH PRIVILEGES") === TRUE) {
-    echo "Privileges flushed\n";
+    echo $greenColor . "Privileges flushed" . $resetColor . "\n";
 } else {
-    echo "Error flushing privileges: " . $conn->error . "\n";
+    echo $redColor . "Error flushing privileges: " . $conn->error . $resetColor . "\n";
 }
 
 // Close connection
 echo "Closing MySQL connection...\n";
 $conn->close();
-echo "Script executed successfully\n";
+echo $greenColor . "Script executed successfully" . $resetColor . "\n";
 exit(0); // Exit with success
