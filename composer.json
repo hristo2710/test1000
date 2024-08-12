@@ -73,7 +73,7 @@
     "rename-folder": "rename folder with the name of the project",
     "git-init": "git init",
     "to-start": "composer update",
-    "to-add-database": "composer run-script add-database",
+    "to-add-database": "php create_database.php",
     "get-ready": "composer run-script dev",
 
     "to-install-only-dependencies": "composer install --no-scripts"

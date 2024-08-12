@@ -45,7 +45,7 @@ DB_NAME = "client name" + "_" + "start with 4 for local development, 5 for stagi
 - Initialize wordpress installation - `composer update`.
 - Rename .env.example to .env - ` mv .\.env.emample .env `
 - Edit .Env for existing or new project ` code -r .\.env `
-- Create a new table in database - `composer run-script add-database `.
+- Create a new table in database - `php create_database.php`.
 - Manual Start the PHP built-in server - `php -S 127.0.0.1:80 -t web`.
 
 ### I prefer to use install
