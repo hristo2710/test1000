@@ -22,11 +22,6 @@
 
   "repositories": [
     {
-      "type": "composer",
-      "url": "https://wpackagist.org",
-      "only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
-    },
-    {
         "type": "package",
         "package": {
             "name": "plugin/fake-sync-store",
@@ -78,7 +73,7 @@
     "rename-folder": "rename folder with the name of the project",
     "git-init": "git init",
     "to-start": "composer update",
-    "to-add-database": "composer run-script add-database -- writeNewDatabaseName",
+    "to-add-database": "composer run-script add-database",
     "get-ready": "composer run-script dev",
 
     "to-install-only-dependencies": "composer install --no-scripts"
