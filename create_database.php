@@ -15,6 +15,31 @@ $greenColor = "\033[32m";
 $resetColor = "\033[0m";
 
 
+
+// List of required environment variables
+$requiredEnvVars = [
+    'DB_HOST',
+    'DB_USER',
+    'DB_PASSWORD',
+    'DB_NAME',
+    'WP_HOME'
+];
+
+// Check if all required environment variables are set
+foreach ($requiredEnvVars as $var) {
+    if (empty($_ENV[$var])) {
+        fwrite(STDERR, "Error: Required environment variable $redColor '$var' $resetColor is missing or empty. " . PHP_EOL);
+        exit(1);  // Exit with an error code
+    }
+}
+
+// Fetch WP_SITEURL from .env file
+$wpSiteUrl = $_ENV['WP_HOME'];
+// Extract the host from WP_SITEURL
+$parsedUrl = parse_url($wpSiteUrl);
+$WPURL = $parsedUrl['host'] ?? '';
+
+
 echo $greenColor . "Configuration file loaded successfully." . $resetColor . "\n";
 Sleep($second);
 // Extract configuration details
@@ -32,12 +57,7 @@ if (!$host || !$user || !$password) {
 
 echo $greenColor . "Database configuration details extracted successfully." . $resetColor . "\n";
 Sleep($second);
-// // Check command-line arguments
-// echo "Checking command-line arguments...\n";
-// if ($argc < 2) {
-//     echo "Usage: php create_database.php <database_name>\n";
-//     exit(1); // Exit with error
-// }
+
 
 $newDatabase = $_ENV['DB_NAME'];
 $newUser = $_ENV['DB_USER'];
@@ -89,4 +109,16 @@ if ($conn->query("FLUSH PRIVILEGES") === TRUE) {
 echo "Closing MySQL connection...\n";
 $conn->close();
 echo $greenColor . "Script executed successfully" . $resetColor . "\n";
+
+// Prompt the user to run the PHP built-in server
+echo "Add to host file 127.0.0.1 $WPURL ," . PHP_EOL;
+$runServer = readline("Do you want to start the PHP built-in server on $WPURL:80? (yes/no): ");
+
+if (strtolower($runServer) === 'yes' || strtolower($runServer) === 'y') {
+    echo $greenColor . "Starting PHP built-in server..." . $resetColor . PHP_EOL;
+    // Start the PHP built-in server
+    exec("php -S $WPURL:80 -t web");
+} else {
+    echo $redColor . "PHP built-in server not started." . $resetColor . PHP_EOL;
+}
 exit(0); // Exit with success
