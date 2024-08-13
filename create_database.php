@@ -111,7 +111,6 @@ echo "Closing MySQL connection...\n";
 $conn->close();
 echo $greenColor . "Script executed successfully" . $resetColor . "\n";
 
-// Prompt the user to run the PHP built-in server
 echo "Add to host file 127.0.0.1 $WPURL ," . PHP_EOL;
 echo $greenColor . "Starting PHP built-in server..." . $resetColor . PHP_EOL;
 exec("php -S $WPURL:$WPPORT -t web");
