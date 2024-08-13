@@ -66,7 +66,7 @@
   },
   "scripts": {
     "add-database": "php create_database.php",
-    "dev": "php -S localhost:4004 -t web"
+    "dev": "php -S 127.0.0.1:4004 -t web"
   },
   "note": {
     "git-remove-origin": "git remote remove origin",
