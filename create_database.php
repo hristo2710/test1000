@@ -113,13 +113,7 @@ echo $greenColor . "Script executed successfully" . $resetColor . "\n";
 
 // Prompt the user to run the PHP built-in server
 echo "Add to host file 127.0.0.1 $WPURL ," . PHP_EOL;
-$runServer = readline("Do you want to start the PHP built-in server on $WPURL:$WPPORT? (yes/no): ");
+echo $greenColor . "Starting PHP built-in server..." . $resetColor . PHP_EOL;
+exec("php -S $WPURL:$WPPORT -t web");
 
-if (strtolower($runServer) === 'yes' || strtolower($runServer) === 'y') {
-    echo $greenColor . "Starting PHP built-in server..." . $resetColor . PHP_EOL;
-    // Start the PHP built-in server
-    exec("php -S $WPURL:$WPPORT -t web");
-} else {
-    echo $redColor . "PHP built-in server not started." . $resetColor . PHP_EOL;
-}
 exit(0); // Exit with success
