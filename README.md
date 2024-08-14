@@ -1,4 +1,4 @@
-# WordPress installation guide test
+# WordPress installation guide
 
 ## Introduction
 Clone this repository to your local machine and follow the steps below.

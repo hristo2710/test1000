@@ -1,7 +1,6 @@
 {
   "name": "incloud/wordpress",
   "description": "InCloud WordPress site.",
-  
   "type": "project",
  
   "require": {
